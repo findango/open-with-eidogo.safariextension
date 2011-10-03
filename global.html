@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<script>
+
+safari.application.addEventListener("validate", handleValidate, false);
+safari.application.addEventListener("command", handleCommand, false);
+
+
+function handleValidate(event) {
+   if (event.command !== "openWithEidogo")
+        return;
+ 
+    // We expect the user info for this event to contain the target_url property
+    if (!event.userInfo || !event.userInfo.target_url) 
+        event.target.disabled = true;
+    
+}
+
+
+function handleCommand(event) {
+    if (event.command !== "openWithEidogo")
+        return;
+    if (!event.userInfo || !event.userInfo.target_url)
+        return;
+
+    var w = safari.application.openBrowserWindow();
+    w.activeTab.url = "http://eidogo.com/#url:" + event.userInfo.target_url;
+}
+
+
+</script>
+
